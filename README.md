@@ -4,7 +4,7 @@ This is a simple dockerized snakemake pipeline for conducting Genome-Wide Associ
 It can either 
 
 
-### Modes or running - in container, containerized, conda:
+### Modes of running - within container, containerized, conda:
 This pipeline can run in at least 3 modes:
 
 A) This workflow can either run entirely in a docker container, 
