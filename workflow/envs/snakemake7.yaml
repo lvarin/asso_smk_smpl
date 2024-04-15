@@ -8,3 +8,5 @@ dependencies:
   - mamba
   - tabulate=0.8.10
   - singularity
+  - curl
+  - gzip
