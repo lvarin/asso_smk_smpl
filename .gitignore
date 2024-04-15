@@ -3,3 +3,4 @@ results/
 .conda/
 .cache/
 input_files/
+dockerfile

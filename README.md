@@ -10,7 +10,8 @@ A) This workflow can either run entirely in a docker container,
 e.g. use https://hub.docker.com/r/condaforge/mambaforge :
 ```
 docker pull condaforge/mambaforge
-docker run -i -t -v "$(pwd)":/folder_within_cont condaforge/mambaforge bash
+docker run -i -t -v "$(pwd)":/local_folder_in_cnt condaforge/mambaforge bash
+cd local_folder_in_cnt
 ```
 Then run the commands below, but skip step 2. 
 
