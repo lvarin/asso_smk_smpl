@@ -1,19 +1,34 @@
-## Snakemake pipeline for conducting GWAS
+## Snakemake pipeline for conducting association analysis
 
 This is a simple dockerized snakemake pipeline for conducting Genome-Wide Association Studies (GWAS). It assumes that quality controlled genotype files are available.
 It can either 
 
-### Setup / running the pipeline:
-This workflow can either run entirely in a docker container (use https://hub.docker.com/r/condaforge/mambaforge) and run the following commands (skip 2)
+
+### Modes or running - in container, containerized, conda:
+This pipeline can run in at least 3 modes:
+A) This workflow can either run entirely in a docker container, 
+e.g. use https://hub.docker.com/r/condaforge/mambaforge :
+```
+docker pull condaforge/mambaforge
+docker run -i -t -v "$(pwd)":/folder_within_cont condaforge/mambaforge bash
+```
+Then run the commands below, but skip step 2. 
+
+B) Alternatively, snakemake can be installed locally and the rules can be run within containers (dockerized version). 
+C) The pipeline can be run using conda and no containerization.
+
+For execution on a HPC modes B and C are probably best.
 
 
+### Setting up and running the pipeline:
+To run the pipeline the following steps are necessary:
 1. Go to a directory where you would like to run the analyses and clone this repository:
 ```
 git clone https://github.com/Ax-Sch/asso_smk_smpl.git
 cd asso_smk_smpl
 ```
 
-2. Install conda, e.g. download miniconda3 (https://docs.conda.io/en/latest/miniconda.html) by running the following commands on a linux system (skip when running entirely in container):
+2. Skip if conda is present or you are in mode A: Install conda, e.g. download miniconda3 (https://docs.conda.io/en/latest/miniconda.html) by running the following commands on a linux system:
 ```
 ### run only when you do not have conda installed:
 curl -sL "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" > "Miniconda3.sh"
@@ -34,25 +49,24 @@ conda activate snakemake7
 curl -J -O "https://uni-bonn.sciebo.de/s/4jdQGESb92jCaze/download"
 unzip input_files.zip
 ```
-The config file (config/config.yaml) is configured to work with these files.
-
+The config file (config/config.yaml) is configured to work with these files out of the box.
 
 5. Run the pipeline:
-When snakemake was installed regularly, outside of docker, run:
+For modes A and C from above or for development, run:
+```
+conda activate snakemake7
+snakemake -np # do a dry run first
+snakemake --cores 1 --use-conda
+```
+For mode B from above, run:
 ```
 conda activate snakemake7 # activates the snakemake7 conda environment
 snakemake -np # do a dry run first
 snakemake --cores 1 --use-singularity --use-conda # this runs the dockerized version of the pipeline
 ```
 
-If you run snakemake inside of a container or if you do development run the following:
-```
-conda activate snakemake7
-snakemake -np # do a dry run first
-snakemake --cores 1 --use-conda
-```
 
-### Analyzing your own data:
+### Analyzing own/real data:
 
 If you would like to analyze your own data, the following files are needed (see the example data):
 - plink fam/bim/bed files of your genotyped and quality controlled SNPs.
@@ -63,17 +77,20 @@ The files should be placed within the directory of the repository, as directorie
 
 Please open the file config/config.yaml and adjust the settings: e.g. adjust the file names; add the names of the columns of the sample sheet file that you would like to use as phenotypes and covariates; set the number of PCs that you would like to include. 
 
-### Containerization after changes
+
+### Creating a container with all environments after changes (for mode B)
 
 The pipeline can be containerized after conda environments have been changed. The following commands have to be executed:
 ```
 conda activate snakemake7
 snakemake --containerize > dockerfile
-
-snakemake --cores 1 --use-conda
+docker build -t gwas_pipeline .
+docker tag gwas_pipeline axschmidt/gwas_pipeline:0.1
+docker push axschmidt/gwas_pipeline:0.1
 ```
 
+
 ### Acknowledgement:
-In particular, I would like to thank the developers of the software that is used within this repository, e.g. snakemake, regenie, plink, plink2, R. tidyverse
+In particular, I would like to thank the developers of the software that is used within this repository, among others snakemake, regenie, plink, plink2, R, tidyverse.
 
 
