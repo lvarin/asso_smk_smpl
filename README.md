@@ -2,7 +2,7 @@
 
 This is a simple dockerized snakemake pipeline for conducting Genome-Wide Association Studies (GWAS). It assumes that quality controlled genotype files are available.
 
-# Setup / running the pipeline:
+### Setup / running the pipeline:
 1. Go to a directory where you would like to run the analyses and clone this repository:
 ```
 git clone https://github.com/Ax-Sch/asso_smk_smpl.git
@@ -46,7 +46,7 @@ snakemake -np # do a dry run first
 snakemake --cores 1 --use-conda
 ```
 
-# Analyzing your own data:
+### Analyzing your own data:
 
 If you would like to analyze your own data, the following files are needed (see the example data):
 - plink fam/bim/bed files of your genotyped and quality controlled SNPs.
@@ -57,7 +57,16 @@ The files should be placed within the directory of the repository, as directorie
 
 Please open the file config/config.yaml and adjust the settings: e.g. adjust the file names; add the names of the columns of the sample sheet file that you would like to use as phenotypes and covariates; set the number of PCs that you would like to include. 
 
-# Acknowledgement:
+### Containerization after changes
+
+The pipeline can be containerized after conda environments have been changed. The following commands have to be executed:
+```
+conda activate snakemake7
+
+snakemake --cores 1 --use-conda
+```
+
+### Acknowledgement:
 In particular, I would like to thank the developers of the software that is used within this repository, e.g. snakemake, regenie, plink, plink2, R. tidyverse
 
 
