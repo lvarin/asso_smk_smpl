@@ -6,6 +6,7 @@ It can either
 
 ### Modes or running - in container, containerized, conda:
 This pipeline can run in at least 3 modes:
+
 A) This workflow can either run entirely in a docker container, 
 e.g. use https://hub.docker.com/r/condaforge/mambaforge :
 ```
@@ -15,7 +16,9 @@ cd local_folder_in_cnt
 ```
 Then run the commands below, but skip step 2. 
 
-B) Alternatively, snakemake can be installed locally and the rules can be run within containers (dockerized version). 
+
+B) Alternatively, snakemake can be installed locally and the rules can be run within containers (dockerized version).
+ 
 C) The pipeline can be run using conda and no containerization.
 
 For execution on a HPC modes B and C are probably best.
