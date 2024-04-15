@@ -3,6 +3,6 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - snakemake=7.37
+  - snakemake=7.3.7
   - mamba
   - singularity
