@@ -1,0 +1,19 @@
+phenotype:
+  sample_sheet: "input_files/samples_phenotypes.tsv"
+  phenotype_columns:
+    - "example_phenotype"
+  covariate_columns:
+    - "age"
+  covariates_nPC: 10
+# potentially implement: binary vs. continous phenotypes
+
+genotype:
+  genotype_plink_prefix: "input_files/example_genotype/fisherEUR"
+  imp_prefix: "input_files/example_genotype/fisherEUR_"
+  imp_contigs:
+    - "all"
+  imp_postfix: ".vcf.gz"
+  dosage_param: "GP-force"
+
+# cluster configuration
+medium_part: "medium"

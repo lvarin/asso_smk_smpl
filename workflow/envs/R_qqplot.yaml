@@ -1,0 +1,11 @@
+name: R_qqman
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.2
+  - conda-forge::r-qqman=0.1.9
+  - r-data.table=1.15
+  - conda-forge::r-r.utils=2.12
+

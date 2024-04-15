@@ -1,0 +1,8 @@
+name: snakemake7
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - snakemake=7
+  - mamba
+  - singularity
