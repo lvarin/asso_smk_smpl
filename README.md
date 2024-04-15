@@ -5,8 +5,8 @@ This is a simple dockerized snakemake pipeline for conducting Genome-Wide Associ
 Setup:
 1. Go to a directory where you would like to run the analyses and clone this repository:
 ```
-git clone XXX
-cd 
+git clone https://github.com/Ax-Sch/asso_smk_smpl.git
+cd asso_smk_smpl
 ```
 
 2. Install snakemake version 7 with singularity:
