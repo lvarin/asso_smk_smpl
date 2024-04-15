@@ -1,45 +1,51 @@
 ## Snakemake pipeline for conducting GWAS
 
 This is a simple dockerized snakemake pipeline for conducting Genome-Wide Association Studies (GWAS). It assumes that quality controlled genotype files are available.
+It can either 
 
 ### Setup / running the pipeline:
+This workflow can either run entirely in a docker container (use https://hub.docker.com/r/condaforge/mambaforge) and run the following commands (skip 2)
+
+
 1. Go to a directory where you would like to run the analyses and clone this repository:
 ```
 git clone https://github.com/Ax-Sch/asso_smk_smpl.git
 cd asso_smk_smpl
 ```
 
-2. Install snakemake version 7 with singularity:
-I recommend installing snakemake via conda. If you do not have conda running, e.g. download miniconda3 (https://docs.conda.io/en/latest/miniconda.html) by running the following commands on a linux system:
+2. Install conda, e.g. download miniconda3 (https://docs.conda.io/en/latest/miniconda.html) by running the following commands on a linux system (skip when running entirely in container):
 ```
 ### run only when you do not have conda installed:
 curl -sL "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" > "Miniconda3.sh"
 bash Miniconda3.sh
 rm Miniconda3.sh
 ```
-Then install snakemake/singularity via conda:
+
+3. Install snakemake version 7 with singularity via conda:
 ```
 conda env create -f workflow/envs/snakemake7.yaml
 ```
 
-3. Copy the genotype and phenotype data in the workflow directory (putting them somewhere else is problematic when we use containers). Here is an example - to use your own data, see below. Example data derived from the 1000 genomes project can be found here: https://uni-bonn.sciebo.de/s/4jdQGESb92jCaze
+4. Copy the genotype and phenotype data in the workflow directory (putting them somewhere else is problematic when we use containers). Here is an example - to use your own data, see below. Example data derived from the 1000 genomes project can be found here: https://uni-bonn.sciebo.de/s/4jdQGESb92jCaze
 
 I.e. run the following commands within the directory of the repository and example data will be placed into the folder "input_files":
 ```
+conda activate snakemake7
 curl -J -O "https://uni-bonn.sciebo.de/s/4jdQGESb92jCaze/download"
 unzip input_files.zip
 ```
 The config file (config/config.yaml) is configured to work with these files.
 
 
-4. Now you can execute the pipeline, here as a dockerized version:
+5. Run the pipeline:
+When snakemake was installed regularly, outside of docker, run:
 ```
 conda activate snakemake7 # activates the snakemake7 conda environment
 snakemake -np # do a dry run first
 snakemake --cores 1 --use-singularity --use-conda # this runs the dockerized version of the pipeline
 ```
 
-If you would like to run the pipeline without containers (better for development), slightly modify the commands above:
+If you run snakemake inside of a container or if you do development run the following:
 ```
 conda activate snakemake7
 snakemake -np # do a dry run first
@@ -62,6 +68,7 @@ Please open the file config/config.yaml and adjust the settings: e.g. adjust the
 The pipeline can be containerized after conda environments have been changed. The following commands have to be executed:
 ```
 conda activate snakemake7
+snakemake --containerize > dockerfile
 
 snakemake --cores 1 --use-conda
 ```
