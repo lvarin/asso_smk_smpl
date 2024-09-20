@@ -2,7 +2,7 @@ library(tidyverse)
 # Debug
 sample_sheet_file="input_files/samples_phenotypes.tsv"
 pheno_columns=c("example_phenotype")
-pheno_file="results/pheno_cov/pheno.pheno"
+pheno_file="s3://test-snakemake/results/pheno_cov/pheno.pheno"
 
 sample_sheet_file=snakemake@input[["sample_sheet_file"]]
 pheno_columns=snakemake@params[["pheno_columns"]]

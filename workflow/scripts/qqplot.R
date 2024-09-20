@@ -5,7 +5,7 @@ library(R.utils)
 # initially based on a script from the COVID-HGI; highly modified
 
 # debug
-in_file="results/regenie_association_merged/example_phenotype.regenie.gz"
+in_file="s3://test-snakemake/results/regenie_association_merged/example_phenotype.regenie.gz"
 bp_col="GENPOS"
 chr_col="CHROM"
 pcols =c("LOG10P")

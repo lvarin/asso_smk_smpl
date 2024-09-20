@@ -1,5 +1,5 @@
 phenotype:
-  sample_sheet: "input_files/samples_phenotypes.tsv"
+  sample_sheet: "s3://test-snakemake/input_files/samples_phenotypes.tsv"
   phenotype_columns:
     - "example_phenotype"
   covariate_columns:
@@ -8,8 +8,8 @@ phenotype:
 # potentially implement: binary vs. continous phenotypes
 
 genotype:
-  genotype_plink_prefix: "input_files/example_genotype/fisherEUR"
-  imp_prefix: "input_files/example_genotype/fisherEUR_"
+  genotype_plink_prefix: "s3://test-snakemake/input_files/example_genotype/fisherEUR"
+  imp_prefix: "s3://test-snakemake/input_files/example_genotype/fisherEUR_"
   imp_contigs:
     - "all"
   imp_postfix: ".vcf.gz"
