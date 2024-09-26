@@ -1,0 +1,12 @@
+name: snakemake8
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - snakemake=8.20.3
+  - mamba
+  - tabulate=0.8.10
+  - singularity
+  - curl
+  - unzip

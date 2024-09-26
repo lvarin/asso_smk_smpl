@@ -119,6 +119,8 @@ rule regenie_association:
 	input:
 		cov="results/pheno_cov/cov.cov",
 		pheno="results/pheno_cov/pheno.pheno",
+		pvar="results/imp_converted/chr{contig}.pvar",
+		psam="results/imp_converted/chr{contig}.psam",
 		step2_pgen="results/imp_converted/chr{contig}.pgen",
 	output:
 		step2_NQ2=expand("results/regenie_association/{contig}_{phenotypes}.regenie.gz", 
@@ -127,10 +129,12 @@ rule regenie_association:
 	params:
 		out_prefix="results/regenie_association/{contig}",
 		plink_in=lambda wildcards, input: input["step2_pgen"][:-5],
+		phenotypes=config["phenotype"]["phenotype_columns"],
 	conda: "envs/regenie.yaml"
 	shell:
 		"""
-		regenie \
+		mkdir -p results/regenie_association/
+                regenie \
 		--step 2 \
 		--pgen {params.plink_in} \
 		--phenoFile {input.pheno} \
@@ -141,13 +145,14 @@ rule regenie_association:
 		--ignore-pred \
 		--bsize 1000 \
 		--minMAC 10 \
-		--out {params.out_prefix}
+		--out {params.out_prefix} && \
+		mv {params.out_prefix}_{params.phenotypes}.regenie.gz {output}
 		"""
 		
 		
 rule merge_regenie_results:
 	input:
-		expand("results/regenie_association/{contig}_{phenotypes}.regenie.gz", contig=config["genotype"]["imp_contigs"], allow_missing=True), 
+		expand("results/regenie_association/{contig}_{phenotypes}.regenie.gz", contig=config["genotype"]["imp_contigs"], allow_missing=True),
 	output:
 		merged_assoc="results/regenie_association_merged/{phenotypes}.regenie.gz",
 	params:
@@ -155,11 +160,11 @@ rule merge_regenie_results:
 	conda: "envs/tabix.yaml"
 	shell:
 		"""
+                mkdir -p results/regenie_association_merged/
 		if zcat {input} | head -n1 > {params.header}
 		then
 		echo "error"
 		fi
-		
 		zcat {input} | grep -v "CHROM" | \
 		cat {params.header} - | \
 		bgzip > {output}
